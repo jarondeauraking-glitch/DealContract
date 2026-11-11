@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101827">
+<title>DealContract — Free Real Estate Draft Builder</title>
+<style>
+:root{--bg:#0b1220;--panel:#121d2e;--panel2:#19283d;--line:#2a3b53;--txt:#edf4ff;--muted:#9aacc2;--blue:#7dd3fc;--green:#86efac;--yellow:#fcd34d;--red:#fca5a5}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 20% 0%,#142942 0,transparent 45%),var(--bg);color:var(--txt);font:15px/1.5 Inter,system-ui,Arial,sans-serif}
+header{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;padding:20px clamp(16px,4vw,52px);border-bottom:1px solid var(--line);background:#0b1220d9}
+.logo{font-size:23px;font-weight:850;letter-spacing:-.8px}.logo span{color:var(--blue)}.sub{font-size:11px;color:var(--muted);letter-spacing:1.3px;text-transform:uppercase}
+nav{display:flex;gap:8px;flex-wrap:wrap}button{border:1px solid var(--line);background:var(--panel2);color:var(--txt);border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer}button:hover{border-color:var(--blue)}button.primary{background:var(--blue);color:#062033;border-color:var(--blue)}button:disabled{opacity:.45;cursor:not-allowed}
+main{max-width:1180px;margin:30px auto;padding:0 18px 56px}.hero{margin-bottom:24px}.eyebrow{color:var(--blue);font-size:12px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase}.hero h1{font-size:clamp(30px,5vw,44px);letter-spacing:-1.5px;line-height:1.08;margin:8px 0}.hero p{max-width:760px;color:var(--muted);margin:0}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0}.tab.active{border-color:var(--blue);background:#16344a;color:var(--blue)}.view{display:none}.view.active{display:block}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}.card{grid-column:span 6;background:#121d2ef2;border:1px solid var(--line);border-radius:16px;padding:20px;min-width:0}.card.full{grid-column:1/-1}.card.third{grid-column:span 4}.card h2{font-size:18px;margin:0 0 14px}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field{display:flex;flex-direction:column;gap:5px;min-width:0}.wide{grid-column:1/-1}label{font-size:12px;color:var(--muted);font-weight:700}input,select,textarea{width:100%;min-width:0;background:#0a1525;color:var(--txt);border:1px solid var(--line);border-radius:9px;padding:11px;font:inherit}textarea{min-height:82px;resize:vertical}input:focus,select:focus,textarea:focus{outline:2px solid #38bdf8;outline-offset:1px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.muted{color:var(--muted)}.small{font-size:12px;color:var(--muted)}.notice{border:1px solid #725a20;background:#302812;color:#fde68a;border-radius:12px;padding:14px 16px;margin:16px 0;font-size:13px}.metric{font-size:28px;font-weight:850;letter-spacing:-.7px}.good{color:var(--green)}.bad{color:var(--red)}.metric-label{color:var(--muted);font-size:13px;margin-top:12px}.preview{background:#fff;color:#172033;border-radius:12px;padding:clamp(18px,4vw,38px);min-height:320px}.preview h2,.preview h3{color:#172033}.preview p{margin:9px 0}.stamp{display:inline-block;border:2px solid #a21d1d;color:#a21d1d;font-weight:900;letter-spacing:1px;padding:4px 8px;font-size:12px}.preview .line{border-bottom:1px solid #cbd5e1;padding:6px 0}.saved{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}footer{border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:12px;padding:22px}
+@media(max-width:760px){.card,.card.third{grid-column:1/-1}.fields{grid-template-columns:1fr}.wide{grid-column:auto}header{align-items:flex-start}}
+@media print{body{background:#fff;color:#111}header,.hero,.tabs,.notice,.no-print,footer{display:none!important}main{margin:0;padding:0;max-width:none}.view{display:none!important}#builder.view.active{display:block!important}.card{display:none!important}#previewCard{display:block!important;border:0;padding:0}.preview{padding:0}}
+</style>
+</head>
+<body>
+<header>
+ <div><div class="logo">Deal<span>Contract</span></div><div class="sub">Free real-estate draft workspace · Canada + USA</div></div>
+ <nav class="no-print"><button class="tab active" data-tab="builder">Draft builder</button><button class="tab" data-tab="analyzer">Deal analyzer</button><button class="tab" data-tab="saved">Saved drafts</button></nav>
+</header>
+<main>
+<section class="hero no-print"><div class="eyebrow">No subscription · No account · Runs in your browser</div><h1>Build a clearer deal draft.</h1><p>Organize proposed real-estate terms, review deal math, and print a discussion draft for a qualified local professional to review.</p></section>
+<div class="notice no-print"><strong>Important legal limitation:</strong> This free tool creates educational, non-binding discussion drafts—not legally operative purchase agreements, offers, or assignment contracts. Real-estate law and required forms vary by province, state, and transaction. Do not sign or rely on generated text to buy, sell, or assign property. Ask a qualified local real-estate lawyer or notary to prepare or review the correct documents.</div>
+
+<section id="builder" class="view active">
+<div class="grid">
+ <div class="card">
+  <h2>1. Choose your draft type</h2>
+  <div class="fields">
+   <div class="field"><label for="country">Country</label><select id="country"><option>Canada</option><option>United States</option></select></div>
+   <div class="field"><label for="region">Province / state</label><select id="region"></select></div>
+   <div class="field wide"><label for="kind">Document discussion type</label><select id="kind"><option value="purchase">Proposed purchase — discussion summary</option><option value="assignment">Potential assignment — discussion summary</option><option value="terms">General deal terms — discussion summary</option></select></div>
+  </div>
+  <p class="small">Selecting a location helps label your draft; it does not make the document compliant with that jurisdiction's law.</p>
+ </div>
+ <div class="card">
+  <h2>2. Property & parties</h2>
+  <div class="fields">
+   <div class="field wide"><label for="address">Property address / description</label><input id="address" placeholder="Property address or demo label"></div>
+   <div class="field"><label for="seller">Proposed seller</label><input id="seller" placeholder="Full legal name"></div>
+   <div class="field"><label for="buyer">Proposed buyer</label><input id="buyer" placeholder="Full legal name"></div>
+   <div class="field"><label for="assignor">Current buyer / assignor (if relevant)</label><input id="assignor" placeholder="Name or N/A"></div>
+   <div class="field"><label for="assignee">Potential assignee (if relevant)</label><input id="assignee" placeholder="Name or N/A"></div>
+  </div>
+ </div>
+ <div class="card">
+  <h2>3. Proposed financial terms</h2>
+  <div class="fields">
+   <div class="field"><label for="currency">Currency</label><select id="currency"><option value="CAD">CAD — Canadian dollars</option><option value="USD">USD — US dollars</option></select></div>
+   <div class="field"><label for="price">Proposed purchase price</label><input id="price" type="number" min="0" step="0.01" placeholder="0.00"></div>
+   <div class="field"><label for="deposit">Proposed deposit</label><input id="deposit" type="number" min="0" step="0.01" placeholder="0.00"></div>
+   <div class="field"><label for="fee">Potential assignment fee (if relevant)</label><input id="fee" type="number" min="0" step="0.01" placeholder="0.00"></div>
+   <div class="field"><label for="closing">Target closing date</label><input id="closing" type="date"></div>
+   <div class="field"><label for="review">Target inspection / review date</label><input id="review" type="date"></div>
+  </div>
+ </div>
+ <div class="card">
+  <h2>4. Points for professional review</h2>
+  <div class="fields">
+   <div class="field wide"><label for="conditions">Conditions, questions and special points</label><textarea id="conditions" placeholder="For example: financing, inspection, title review, occupancy, included items, deposit handling, assignment consent and required disclosures. List topics to discuss—not legal clause wording."></textarea></div>
+   <div class="field wide"><label for="notes">Internal notes (optional)</label><textarea id="notes" placeholder="Assumptions, missing information, questions to verify…"></textarea></div>
+  </div>
+  <div class="actions"><button class="primary" id="generate">Generate discussion draft</button><button id="save">Save on this device</button></div>
+ </div>
+ <div class="card full" id="previewCard">
+  <div class="no-print" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap"><h2>Document preview</h2><div class="actions" style="margin:0"><button id="copy">Copy text</button><button class="primary" id="print">Print / Save as PDF</button></div></div>
+  <article class="preview" id="preview"><span class="stamp">SAMPLE ONLY — NOT FOR SIGNING</span><h2>Real Estate Discussion Summary</h2><p>Complete the fields and generate a draft.</p></article>
+ </div>
+</div>
+</section>
+
+<section id="analyzer" class="view">
+<div class="grid">
+ <div class="card">
+  <h2>Deal calculator</h2>
+  <div class="fields">
+   <div class="field wide"><label for="dealName">Property / deal label</label><input id="dealName" placeholder="Demo property"></div>
+   <div class="field"><label for="arv">Estimated resale value</label><input id="arv" type="number" min="0" value="250000"></div>
+   <div class="field"><label for="buyPrice">Purchase price</label><input id="buyPrice" type="number" min="0" value="180000"></div>
+   <div class="field"><label for="repairs">Estimated repairs</label><input id="repairs" type="number" min="0" value="20000"></div>
+   <div class="field"><label for="otherCosts">Other estimated costs</label><input id="otherCosts" type="number" min="0" value="5000"></div>
+   <div class="field"><label for="contingency">Contingency</label><input id="contingency" type="number" min="0" value="5000"></div>
+   <div class="field"><label for="targetFee">Potential assignment fee</label><input id="targetFee" type="number" min="0" value="10000"></div>
+  </div>
+  <div class="actions"><button class="primary" id="calculate">Calculate</button><button id="transfer">Use purchase price in draft</button></div>
+ </div>
+ <div class="card">
+  <h2>Illustrative results</h2>
+  <div class="metric-label">Estimated total costs</div><div class="metric" id="total">$210,000</div>
+  <div class="metric-label">Estimated margin before tax / financing</div><div class="metric good" id="profit">$30,000</div>
+  <div class="metric-label">Margin as % of resale value</div><div class="metric" id="marginPct">12.0%</div>
+  <p class="small">Simple arithmetic only. Not an appraisal, financing estimate, tax calculation, investment recommendation or complete underwriting model. Verify all assumptions and costs independently.</p>
+ </div>
+ <div class="card full"><h2>Deal notes</h2><textarea id="analysisNotes" placeholder="Inspection status, comparable sales to verify, financing assumptions, title questions…"></textarea></div>
+</div>
+</section>
+
+<section id="saved" class="view"><div class="card full"><h2>Saved drafts</h2><p class="muted">Stored locally in this browser only. They are not uploaded or synchronized across devices.</p><div id="savedList"></div></div></section>
+</main>
+<footer>DealContract is an independent educational project and is not affiliated with RealVenture. No legal, tax, lending or investment advice is provided.</footer>
+<script>
+const $=id=>document.getElementById(id);
+const regions={
+ Canada:['Alberta','British Columbia','Manitoba','New Brunswick','Newfoundland and Labrador','Northwest Territories','Nova Scotia','Nunavut','Ontario','Prince Edward Island','Quebec','Saskatchewan','Yukon'],
+ 'United States':['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming','District of Columbia']
+};
+function updateRegions(){let a=regions[$('country').value];$('region').innerHTML=a.map(x=>'<option>'+x+'</option>').join('');$('currency').value=$('country').value==='Canada'?'CAD':'USD';}
+$('country').onchange=updateRegions;updateRegions();
+function fmt(n){return new Intl.NumberFormat('en-US',{style:'currency',currency:$('currency').value||'USD',maximumFractionDigits:2}).format(Number(n)||0)}
+function val(id){return $(id).value.trim()||'Not provided'}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function plainDraft(){let type=$('kind').selectedOptions[0].text;let pairs=[
+['Draft type',type],['Jurisdiction', $('region').value+', '+$('country').value],['Property',val('address')],['Proposed seller',val('seller')],['Proposed buyer',val('buyer')],['Current buyer / assignor',val('assignor')],['Potential assignee',val('assignee')],['Currency',val('currency')],['Proposed purchase price',val('price')==='Not provided'?'Not provided':fmt($('price').value)],['Proposed deposit',val('deposit')==='Not provided'?'Not provided':fmt($('deposit').value)],['Potential assignment fee',val('fee')==='Not provided'?'Not provided':fmt($('fee').value)],['Target closing date',val('closing')],['Target inspection / review date',val('review')],['Points for professional review',val('conditions')],['Internal notes',val('notes')]
+];return 'SAMPLE ONLY — NOT FOR SIGNING\nREAL ESTATE DISCUSSION SUMMARY\n\nPurpose: This non-binding educational summary organizes proposed terms for discussion with a qualified local real-estate professional. It is not an offer, purchase agreement, assignment agreement, or promise to buy or sell.\n\n'+pairs.map(p=>p[0]+': '+p[1]).join('\n')+'\n\nIMPORTANT: No party is bound by this summary. Do not sign or rely on it to complete a transaction. A qualified real-estate lawyer or notary in the relevant jurisdiction must prepare or review the correct documents, required disclosures, conditions, deadlines, deposit handling, assignment permissions, tax implications and signing requirements.'}
+function generate(){let p=plainDraft().split('\n');$('preview').innerHTML='<span class="stamp">SAMPLE ONLY — NOT FOR SIGNING</span><h2>Real Estate Discussion Summary</h2><p><strong>Purpose:</strong> This non-binding educational summary organizes proposed terms for discussion with a qualified local real-estate professional. It is not an offer, purchase agreement, assignment agreement, or promise to buy or sell.</p><h3>Proposed terms</h3>'+p.slice(4,-2).map(line=>{let i=line.indexOf(':');return i>0?'<p class="line"><strong>'+esc(line.slice(0,i))+':</strong> '+esc(line.slice(i+1).trim())+'</p>':''}).join('')+'<hr><p><strong>Important:</strong> No party is bound by this summary. Do not sign or rely on it to complete a transaction. A qualified real-estate lawyer or notary in the relevant jurisdiction must prepare or review the correct documents, required disclosures, conditions, deadlines, deposit handling, assignment permissions, tax implications and signing requirements.</p><p>Generated by DealContract — educational sample.</p>'}
+$('generate').onclick=generate;$('print').onclick=()=>window.print();$('copy').onclick=async()=>{try{await navigator.clipboard.writeText(plainDraft());$('copy').textContent='Copied!';setTimeout(()=>$('copy').textContent='Copy text',1500)}catch(e){alert('Clipboard access unavailable. Use Print / Save as PDF instead.')}};
+function snapshot(){let ids=['country','region','kind','address','seller','buyer','assignor','assignee','currency','price','deposit','fee','closing','review','conditions','notes'];let d={created:new Date().toLocaleString()};ids.forEach(id=>d[id]=$(id).value);return d}
+$('save').onclick=()=>{let a=JSON.parse(localStorage.getItem('dealcontractDrafts')||'[]');a.unshift(snapshot());localStorage.setItem('dealcontractDrafts',JSON.stringify(a.slice(0,50)));alert('Saved in this browser on this device.');};
+function renderSaved(){let a=JSON.parse(localStorage.getItem('dealcontractDrafts')||'[]');$('savedList').innerHTML=a.length?a.map((d,i)=>'<div class="saved"><div><strong>'+esc(d.address||'Untitled property')+'</strong><div class="small">'+esc(d.created||'')+' · '+esc(d.country||'')+' / '+esc(d.region||'')+'</div></div><div class="actions"><button data-load="'+i+'">Load</button><button data-del="'+i+'">Delete</button></div></div>').join(''):'<p class="muted">No drafts saved yet.</p>';document.querySelectorAll('[data-load]').forEach(b=>b.onclick=()=>{let d=a[+b.dataset.load];Object.keys(d).forEach(k=>{if($(k))$(k).value=d[k]});updateRegions();$('region').value=d.region||$('region').value;document.querySelector('[data-tab="builder"]').click();generate()});document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{a.splice(+b.dataset.del,1);localStorage.setItem('dealcontractDrafts',JSON.stringify(a));renderSaved()})}
+document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.view').forEach(x=>x.classList.toggle('active',x.id===b.dataset.tab));if(b.dataset.tab==='saved')renderSaved()});
+function calculate(){let arv=+$('arv').value||0,buy=+$('buyPrice').value||0,rep=+$('repairs').value||0,other=+$('otherCosts').value||0,cont=+$('contingency').value||0,fee=+$('targetFee').value||0,total=buy+rep+other+cont,profit=arv-total-fee;$('total').textContent=fmt(total);$('profit').textContent=fmt(profit);$('profit').className='metric '+(profit>=0?'good':'bad');$('marginPct').textContent=arv?(profit/arv*100).toFixed(1)+'%':'—'}
+$('calculate').onclick=calculate;['arv','buyPrice','repairs','otherCosts','contingency','targetFee'].forEach(id=>$(id).addEventListener('input',calculate));$('transfer').onclick=()=>{$('price').value=$('buyPrice').value;$('address').value=$('dealName').value;document.querySelector('[data-tab="builder"]').click();generate()};calculate();generate();
+</script>
+</body></html>
